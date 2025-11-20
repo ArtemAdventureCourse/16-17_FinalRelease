@@ -17,22 +17,22 @@ public class AggrZone : MonoBehaviour
     public event Action<GameObject> Entered;
     private bool playerInTrigger = false;
     private bool isActive = false;
+    private float _dist;
     public GameObject GetGameObject() => _player.gameObject;
 
+    public float GetDistance() => _dist = Vector3.Distance(_player.transform.position, _enemy.transform.position);
     private void Update()
     {
 
-        float dist = Vector3.Distance(_player.transform.position, _enemy.transform.position);
-
-
-        if (dist <= _enterDistance)
+        GetDistance();
+        if (_dist <= _enterDistance)
         {
             _enemy.SetTarget(_player.transform);
             _enemy.SetReactBehavior();
         }
 
 
-        if (dist > _exitDistance)
+        if (_dist > _exitDistance)
         {
             _enemy.SetIdleBehavior();
             _enemy.ClearTarget();

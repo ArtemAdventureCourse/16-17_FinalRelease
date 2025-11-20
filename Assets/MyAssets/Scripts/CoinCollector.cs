@@ -7,7 +7,7 @@ using UnityEngine;
 public class CoinCollector : MonoBehaviour
 {
     [SerializeField] private List<Coin> coinList;
-    private List<Coin> coinCollected=new List<Coin>();
+    private List<Coin> coinCollected = new List<Coin>();
     public event Action StartedCollect;
     [SerializeField] private Enemy _enemy;
     //  private List<Enemy> _enemies=new List<Enemy>();
@@ -26,7 +26,8 @@ public class CoinCollector : MonoBehaviour
             {
                 foreach (Enemy enemy in spawner.enemies)
                 {
-                   enemy.ChangeReactSubState(EnemyReactBehaviorType.Chase);
+                    enemy.ChangeChaseState();
+                    enemy.SetReactBehavior();
                 }
             }
 

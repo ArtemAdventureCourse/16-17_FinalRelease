@@ -34,6 +34,12 @@ public class Spawner : MonoBehaviour
         _spawnOffset = new Vector3(0, 1, 0);
     }
 
+    private void LateUpdate()
+    {
+        _enemyPrefab.gameObject.SetActive(false);
+    }
+
+
     private void Start()
     {
         random = new Vector3(
@@ -53,6 +59,7 @@ public class Spawner : MonoBehaviour
     {
         _lastEnemy = _charactersFactory.CreateEnemy(_enemyPrefab, spawnPoint.position + random, _spawnOffset);
         enemies?.Add(_lastEnemy);
+
     }
 
     public IBehavior SpawnIdleBehavior(
@@ -67,11 +74,12 @@ public class Spawner : MonoBehaviour
     public IBehavior SpawnReactBehavior(
         EnemyReactBehaviorType type,
         Enemy enemy,
+        Effect effect,
         Transform enemyPosition,
         NavMeshAgent navMesh = null)
     {
 
-        return _charactersFactory.CreateReactBehavior(type, enemy, _player, _effect, enemyPosition, navMesh);
+        return _charactersFactory.CreateReactBehavior(type, enemy, _player, effect, enemyPosition, navMesh);
     }
 
 }

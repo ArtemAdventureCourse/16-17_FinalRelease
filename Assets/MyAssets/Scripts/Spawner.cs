@@ -34,7 +34,7 @@ public class Spawner : MonoBehaviour
         _spawnOffset = new Vector3(0, 1, 0);
     }
 
-    private void LateUpdate()
+    public void Update()
     {
         _enemyPrefab.gameObject.SetActive(false);
     }
@@ -50,7 +50,7 @@ public class Spawner : MonoBehaviour
 
         SpawnEnemy(_spawnPoint);
         SelectBehavior();
-
+  
     }
 
     public void SelectBehavior() => _lastEnemy?.Init(_idleType, _reactType);

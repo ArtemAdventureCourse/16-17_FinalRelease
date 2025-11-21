@@ -1,9 +1,8 @@
 using System;
 using UnityEngine;
-
 public class Timer : IDisposable
 {
-    private readonly float _startTime = 50f;
+    private readonly float _startTime = 30f;
     private float _currentTime;
     private bool StartDestroyTime = false;
 
@@ -20,7 +19,7 @@ public class Timer : IDisposable
         {
             _currentTime -= Time.deltaTime;
             _currentTime = Mathf.Max(_currentTime, 0);
-            Debug.Log("立った時間:" + _currentTime.ToString("F0"));
+            DevLog.Warn("立った時間:" + _currentTime.ToString("F0"));
         }
     }
 

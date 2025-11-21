@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour, IAgroObserver
 
     private bool IsEnteredPlayer;
 
-   
+
 
     public void Awake()
     {
@@ -59,12 +59,12 @@ public class Enemy : MonoBehaviour, IAgroObserver
         {
             DevLog.Log($"group:{group.position}");
         }
-        
+
     }
 
     private bool IsSafetyDistance()
     {
-       
+
         if (_dist >= 2)
         {
             return false;
@@ -73,12 +73,16 @@ public class Enemy : MonoBehaviour, IAgroObserver
 
     }
 
+    public void Dead()
+    {
+        gameObject.SetActive(false);
+    }
     private bool NotStartCollectCoin() => _forCollectCoinBehavior == null;
-    private void Update()
+    public void Update()
     {
         _dist = _aggrZone.GetDistance();
 
-        if (IsSafetyDistance()==false)
+        if (IsSafetyDistance() == false)
         {
 
             if (NotStartCollectCoin())
@@ -91,7 +95,7 @@ public class Enemy : MonoBehaviour, IAgroObserver
         {
             DamagePlayerForExplosion();
             _dieBehavior?.Update();
-           
+
         }
 
         ChangeStateAllEnemies();
@@ -143,8 +147,8 @@ public class Enemy : MonoBehaviour, IAgroObserver
 
     public void ChangeChaseState()
     {
-        _forCollectCoinBehavior= _spawner.SpawnReactBehavior(EnemyReactBehaviorType.Chase,this, _effect,this.transform);
-      
+        _forCollectCoinBehavior = _spawner.SpawnReactBehavior(EnemyReactBehaviorType.Chase, this, _effect, this.transform);
+
     }
 
     private void DamagePlayerForExplosion()
@@ -171,7 +175,7 @@ public class Enemy : MonoBehaviour, IAgroObserver
     public void ChangeIdleSubState(EnemyIdleBehaviorType newType)
     {
 
-     
+
         _idleBehavior = _spawner.SpawnIdleBehavior(newType, this, _points);
         _currentBehavior = _idleBehavior;
         _currentBehavior.Enter();
@@ -182,7 +186,7 @@ public class Enemy : MonoBehaviour, IAgroObserver
     public void ChangeReactSubState(EnemyReactBehaviorType newType)
     {
 
-     
+
         _reactBehavior = _spawner.SpawnReactBehavior(newType, this, _effect, this.transform);
         _currentBehavior = _reactBehavior;
         _currentBehavior.Enter();
@@ -192,7 +196,7 @@ public class Enemy : MonoBehaviour, IAgroObserver
 
     public void SetIdleBehavior()
     {
-      
+
         if (_idleBehavior == null)
             throw new ArgumentException("idleBehavior 指定されてません!");
         else

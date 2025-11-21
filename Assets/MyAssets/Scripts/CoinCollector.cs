@@ -12,7 +12,7 @@ public class CoinCollector : MonoBehaviour
     [SerializeField] private Enemy _enemy;
     //  private List<Enemy> _enemies=new List<Enemy>();
     [SerializeField] private List<Spawner> _spawners;
-
+     public bool HasFullCoin=false;
     public void Initialize()
     {
 
@@ -41,6 +41,8 @@ public class CoinCollector : MonoBehaviour
             if (equal)
             {
                 DevLog.Log("все монеты собраны");
+                HasFullCoin = true;
+                _enemy.Dead();
             }
 
         }

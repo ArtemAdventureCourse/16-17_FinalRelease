@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Effect:MonoBehaviour
 {
+    
    [SerializeField ]private  ParticleSystem _particleSystem;
 
     private void PlayEffect(GameObject gameObject)=> _particleSystem.Play(gameObject);

@@ -7,11 +7,10 @@ public class AggrZone : MonoBehaviour
 {
     [SerializeField] private Enemy _enemy;
     [SerializeField] private Player _player;
+    [SerializeField] private Transform _target;
+    [SerializeField]private CharacterHealth _character;
      private float _enterDistance = 5.5f;   
      private float _exitDistance = 12.0f;
-    [SerializeField] private Transform _target;
-
-    [SerializeField] private Spawner _spawner;
     private bool HasEnemy => _enemy != null;
 
     public event Action<GameObject> Entered;
@@ -25,10 +24,12 @@ public class AggrZone : MonoBehaviour
     {
 
         GetDistance();
+
         if (_dist <= _enterDistance)
         {
             _enemy.SetTarget(_player.transform);
             _enemy.SetReactBehavior();
+            _character.TakeDamage(1);
         }
 
 
@@ -47,11 +48,13 @@ public class AggrZone : MonoBehaviour
         {
             _player = player;
             Entered?.Invoke(player.gameObject);
+            
         }
 
     }
     private void OnTriggerExit(Collider other)
     {
+
         if (other.GetComponent<Player>() is Player player && HasEnemy)
         {
             Entered?.Invoke(player.gameObject);

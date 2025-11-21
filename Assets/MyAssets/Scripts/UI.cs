@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ using UnityEngine;
 /// - ゲーム内でプレイヤーが行動する際、体力や滞在状況の更新が自動的に行われます。
 /// - 管理者や他の開発者が画面上でプレイヤーの情報を確認できます。
 /// </remarks>
+
+[RequireComponent(typeof(TextMeshProUGUI))]
 public class UI : MonoBehaviour, IHealthObserver, IAgroObserver
 {
     [SerializeField] private AggrZone _aggrZone; // プレイヤーが入ると検知されるエリア
@@ -22,19 +25,19 @@ public class UI : MonoBehaviour, IHealthObserver, IAgroObserver
     private GameObject _player; // 現在エリア内にいるプレイヤー
 
     [SerializeField] private CharacterHealth _characterHealth; // キャラクターの体力
-
+    
     private string _playerName; // UIに表示するプレイヤーの名前
 
     private void Start()
     {
-        
+
         Debug.Log("UI HEALTH:" + _characterHealth.Health.Value);
 
     }
 
     public void Initialize()
     {
-      
+
         _aggrZone.Entered += OnEntered;
         _characterHealth.Health.Changed += OnHealthChanged;
     }
@@ -48,14 +51,15 @@ public class UI : MonoBehaviour, IHealthObserver, IAgroObserver
 
     public void OnHealthChanged(int health)
     {
-       
         _characterHealth.Health.Value = health;
         UpdateUI();
+        Debug.Log("UI HEALTH:" + _characterHealth.Health.Value);
+      
     }
 
     public void OnEntered(GameObject player)
     {
-        
+
         _player = player;
         UpdateUI();
     }
@@ -69,7 +73,7 @@ public class UI : MonoBehaviour, IHealthObserver, IAgroObserver
     private void UpdateUI()
     {
         _textMesh.text = $"HP: {_characterHealth.Health.Value}\n" +
-                         $"エリアにエントリー: {_playerName}";
+                         $"Entered: {_playerName}";
         _playerName = _player != null ? _player.name : "";
 
     }
